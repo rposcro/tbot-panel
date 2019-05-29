@@ -1,0 +1,19 @@
+{
+  "tabs": [
+    {
+      "name": "Lights Outside",
+      "appliances": [
+        "c3d81341-5964-4ca0-9925-5db9c694ed6b",
+        "a6fe3e73-f668-4ca9-b8d5-3a13b08831fb",
+        "36d7c970-8185-4254-8ab1-e21fa31d1675",
+        "ed86534a-9ca4-49d3-9a17-faba176f7f74"
+      ]
+    },
+    {
+      "name": "Lights Base Floor",
+      "appliances": [
+        "49f234c3-be21-459d-b5b7-16a82bea76ea"
+      ]
+    }
+  ]
+}
