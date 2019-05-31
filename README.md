@@ -1,4 +1,4 @@
-# InthiConsole
+# Home of Things Console
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
@@ -12,7 +12,9 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. 
+* For staging build use: `ng build --configuration=staging --baseHref=/hoth/panel`
+* For production build use: `ng build --configuration=production --baseHref=/hoth/panel`
 
 ## Running unit tests
 
@@ -22,12 +24,8 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-
-
 # Alternate project names:
 * House of Things (hot)
 * Shack of Things (sot)
 * Things Habitat (th)
+* ThingBOT or ThingBot (TBOT, tbot)

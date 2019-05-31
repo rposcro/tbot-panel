@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
 import { map } from "rxjs/operators";
-import {environment} from "../../../environments/environment";
+import { ConfigurationService } from "./configuration.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplianceStateService {
 
-  private urlBase = `${environment.server.baseUrl}/appliances`;
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private configuration: ConfigurationService) { }
 
   requestOnOffChange(applianceId: string, state: boolean): Promise<boolean> {
     let url = this.combineUrl(applianceId, 'onoff');
@@ -19,8 +17,6 @@ export class ApplianceStateService {
   }
 
   private sendRequest(url: string, body: any): Promise<boolean> {
-    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', 'http://localhost:4200')
-
     return this.http
     .patch(url, body, {
       observe: 'response'
@@ -37,6 +33,6 @@ export class ApplianceStateService {
   }
 
   private combineUrl(applianceId: string, stateType: string): string {
-    return `${this.urlBase}/${applianceId}/state/${stateType}`;
+    return `${this.configuration.apiUrl()}/appliances/${applianceId}/state/${stateType}`;
   }
 }

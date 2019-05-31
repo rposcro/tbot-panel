@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'inthi-console'`, () => {
+  it(`should have as title 'tbot-panel'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('inthi-console');
+    expect(app.title).toEqual('tbot-panel');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to inthi-console!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to tbot-panel!');
   });
 });

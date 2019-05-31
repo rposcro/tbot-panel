@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 
 import Appliance from "../model/appliance";
-import {environment} from "../../../environments/environment";
+import {ConfigurationService} from "./configuration.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppliancesService {
 
-  private urlAppliances = `${environment.server.baseUrl}/appliances`;
   private appliances: Appliance[];
   private appliancesPerId: Map<string, Appliance>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private configuration: ConfigurationService) { }
 
   allAppliances(): Appliance[] {
     return this.appliances;
@@ -25,7 +24,7 @@ export class AppliancesService {
 
   initialize() {
     return new Promise((resolve, reject) => {
-      this.http.get<Appliance[]>(this.urlAppliances).toPromise()
+      this.http.get<Appliance[]>(this.appliancesUrl()).toPromise()
         .then((appliances) => {
           this.appliances = appliances;
           this.appliancesPerId = new Map();
@@ -34,5 +33,9 @@ export class AppliancesService {
         })
         .catch((reason) => reject(reason))
     });
+  }
+
+  private appliancesUrl(): string {
+    return `${this.configuration.apiUrl()}/appliances`;
   }
 }

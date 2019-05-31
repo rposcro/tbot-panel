@@ -6,7 +6,7 @@ export const environment = {
   production: false,
 
   server: {
-    baseUrl: 'http://localhost:4142/ruler'
+    baseUrl: '${hostSchema}//${hostName}:4042'
   }
 };
 

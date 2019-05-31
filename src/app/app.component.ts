@@ -10,8 +10,8 @@ import { BindingsService } from "./shared/services/bindings.service";
 })
 export class AppComponent {
 
-  private appInitialized: boolean;
-  private appInterrupted: boolean;
+  public appInitialized: boolean;
+  public appInterrupted: boolean;
 
   constructor(
     private appliancesService: AppliancesService,

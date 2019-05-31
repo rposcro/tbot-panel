@@ -12,8 +12,8 @@ export class WdgtToggleComponent {
 
   @Input() appliance: Appliance;
 
-  private isKnown: boolean;
-  private isOn: boolean;
+  public isKnown: boolean;
+  public isOn: boolean;
 
   constructor(
     private stateService: ApplianceStateService,
