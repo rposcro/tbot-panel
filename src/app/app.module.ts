@@ -11,9 +11,13 @@ import { WdgtToggleComponent } from './components/widgets/toggle/wdgt-toggle.com
 import { WdgtUndefinedComponent } from './components/widgets/undefined/wdgt-undefined.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatToolbarModule, MatTabsModule } from "@angular/material";
-import { MatSnackBarModule } from "@angular/material";
-import { MatSlideToggleModule, MatButtonModule, MatIconModule, MatCardModule } from '@angular/material';
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [

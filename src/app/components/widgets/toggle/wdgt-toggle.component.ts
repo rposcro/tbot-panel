@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import Appliance from "../../../shared/model/appliance";
-import { MatSlideToggleChange, MatSnackBar } from "@angular/material";
+import { MatSlideToggleChange } from "@angular/material/slide-toggle";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ApplianceStateService} from "../../../shared/services/appliance-state.service";
 
 @Component({
