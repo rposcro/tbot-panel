@@ -11,9 +11,9 @@ RUN rm -fr $DOCUMENT_ROOT/cgi-bin
 
 EXPOSE 4240 4241
 
-WORKDIR /tbot/panel
+WORKDIR $DOCUMENT_ROOT/tbot/panel
 
-COPY dist/* $DOCUMENT_ROOT/tbot/panel
+COPY dist/tbot-panel/* $DOCUMENT_ROOT/tbot/panel/
 COPY deployment/$RELEASE_PROFILE/apache/httpd.conf $APACHE_CONFIG
 
 ENTRYPOINT ["httpd", "-DFOREGROUND", "-k", "start"]

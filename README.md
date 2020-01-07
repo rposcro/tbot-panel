@@ -10,8 +10,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. 
 
-* For staging dockerized build use: `ng build --configuration=staging --baseHref=/tbot/panel`
-* For production dockerized build use: `ng build --configuration=production --baseHref=/tbot/panel`
+* For staging dockerized build use: `ng build --configuration=staging --baseHref=/tbot/panel/`
+* For production dockerized build use: `ng build --configuration=production --baseHref=/tbot/panel/`
 
 When selected project version (staging or production) is built, use `./build-docker.sh` to build docker image
 and export importable binary.
