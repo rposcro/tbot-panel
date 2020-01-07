@@ -12,7 +12,7 @@ export class WdgtUndefinedComponent {
 
   @Input() widget: Widget;
 
-  private appliance: Appliance;
+  public appliance: Appliance;
 
   constructor(
       private appliancesService: AppliancesService) {

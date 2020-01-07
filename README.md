@@ -13,7 +13,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 * For staging dockerized build use: `ng build --configuration=staging --baseHref=/tbot/panel`
 * For production dockerized build use: `ng build --configuration=production --baseHref=/tbot/panel`
 
-When selected project version (staging or production) is built, use `docker build -t tbot-panel .` to build docker image.
+When selected project version (staging or production) is built, use `./build-docker.sh` to build docker image
+and export importable binary.
 
 ## Running unit tests
 
