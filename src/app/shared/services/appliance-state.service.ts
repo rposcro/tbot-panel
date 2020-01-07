@@ -12,8 +12,18 @@ export class ApplianceStateService {
   constructor(private http: HttpClient, private configuration: ConfigurationService) { }
 
   requestOnOffChange(applianceId: string, state: boolean): Promise<boolean> {
-    let url = this.combineUrl(applianceId, 'onoff');
-    return this.sendRequest(url, { 'on': state});
+    let url = this.combineUrl(applianceId, 'on-off');
+    return this.sendRequest(url, { 'state': state});
+  }
+
+  requestRGBWChange(applianceId: string, red: number, green: number, blue: number, white: number) {
+    let url = this.combineUrl(applianceId, 'color');
+    return this.sendRequest(url, {
+      'red': red,
+      'green': green,
+      'blue': blue,
+      'white': white
+    })
   }
 
   private sendRequest(url: string, body: any): Promise<boolean> {

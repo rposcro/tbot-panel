@@ -1,9 +1,9 @@
 <mat-tab-group color="" backgroundColor="primary">
-  <mat-tab *ngFor="let tab of appComposition.tabs">
+  <mat-tab *ngFor="let tab of panelLayout.panelTabs">
     <ng-template mat-tab-label>
       <mat-icon>launch</mat-icon>
       <span class="tab-label-title">{{tab.name}}</span>
     </ng-template>
-    <tab-panel [appliancesIds]="tab.appliances"></tab-panel>
+    <tab-panel [panelTab]="tab"></tab-panel>
   </mat-tab>
 </mat-tab-group>

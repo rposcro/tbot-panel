@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CompositionService } from "../../shared/services/composition.service";
-import AppComposition from "../../shared/model/composition/app-composition";
+import PanelLayout from "../../shared/model/layout/panel.layout";
+import { LayoutService } from "../../shared/services/layout.service";
 
 @Component({
   selector: 'desktop',
@@ -9,12 +9,12 @@ import AppComposition from "../../shared/model/composition/app-composition";
 })
 export class DesktopComponent implements OnInit {
 
-  appComposition: AppComposition;
+  panelLayout: PanelLayout;
 
-  constructor(private appCompositionService: CompositionService) {
+  constructor(private layoutService: LayoutService) {
   }
 
   ngOnInit() {
-    this.appComposition = this.appCompositionService.getApplicationComposition();
+    this.panelLayout = this.layoutService.getPanelLayoutDefinition();
   }
 }
