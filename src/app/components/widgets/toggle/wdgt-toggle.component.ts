@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ApplianceStateService} from "../../../shared/services/appliance-state.service";
 import { AppliancesService } from "../../../shared/services/appliances.service";
@@ -32,16 +31,31 @@ export class WdgtToggleComponent {
     this.isOn = this.isKnown && this.appliance.stateValue['on'] === true;
   }
 
-  onStateChange(event: MatSlideToggleChange) {
-    this.stateService.requestOnOffChange(this.appliance.id, event.checked)
+  onStateChange(event: any) {
+    this.stateService.requestOnOffChange(this.appliance.id, !this.isOn)
       .then(value => {
-        this.isOn = event.checked;
-        this.isKnown = true;
+        console.log(`Received: ${value}`);
+        if (value) {
+          this.switchState();
+        } else {
+          this.failState();
+        }
       })
       .catch(reason => {
         console.log(`Request failed: ${reason}`);
-        this.snackBar.open('Communication with server failed!', null, { duration: 5000 });
-        // TODO: implement error popup here
+        this.failState();
       });
+    return false;
+  }
+
+  private switchState() {
+    this.isOn = !this.isOn;
+    this.isKnown = true;
+  }
+
+  private failState() {
+    this.snackBar.open('Communication with server failed!', null, { duration: 5000 });
+    this.isOn = false;
+    this.isKnown = false;
   }
 }
