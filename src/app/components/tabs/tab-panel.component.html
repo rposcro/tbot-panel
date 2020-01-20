@@ -1,8 +1,11 @@
-<div *ngFor="let applianceId of appliancesIds" [ngSwitch]="widgetForAppliance(applianceId)" class="tab-panel-item">
-  <ng-template [ngSwitchCase]="'Toggle'">
-    <wdgt-toggle [appliance]="applianceById(applianceId)"></wdgt-toggle>
+<div *ngFor="let widget of panelTab.widgets" [ngSwitch]="widget.type" class="tab-panel-item">
+  <ng-template [ngSwitchCase]="'ToggleWidget'">
+    <wdgt-toggle [widget]="widget"></wdgt-toggle>
   </ng-template>
-  <ng-template ngSwitchDefault="'Toggle'">
-    <wdgt-undefined [appliance]="applianceById(applianceId)"></wdgt-undefined>
+  <ng-template [ngSwitchCase]="'RGBWToggleWidget'">
+    <wdgt-rgbw-toggle [widget]="widget"></wdgt-rgbw-toggle>
+  </ng-template>
+  <ng-template ngSwitchDefault="'ToggleWidget'">
+    <wdgt-undefined [widget]="widget"></wdgt-undefined>
   </ng-template>
 </div>

@@ -3,10 +3,13 @@
     <div class="actuator-pad-content">
       <div>
         <div>
-          <mat-slide-toggle
-              checked="{{isOn}}"
-              (click)="onStateChange($event)">
-          </mat-slide-toggle>
+            <mat-slide-toggle checked="{{isOn}}" (click)="onSwitchChange($event)"></mat-slide-toggle>
+            <mcc-color-picker
+                    hideUsedColors="true"
+                    class="rgbw-color-picker"
+                    selectedColor="{{selectedColor}}"
+                    (selected)="onColorChange($event)">
+            </mcc-color-picker>
         </div>
         <div>
           <ng-template [ngIf]="!isKnown">Unknown</ng-template>
