@@ -18,6 +18,7 @@ export class WdgtRgbwToggleComponent {
 
   public isKnown: boolean;
   public isOn: boolean;
+  public selectedColor: String;
 
   private applianceSwitch: Appliance;
   private applianceColor: Appliance;
@@ -33,6 +34,12 @@ export class WdgtRgbwToggleComponent {
     this.applianceSwitch = this.appliancesService.applianceById(this.componentByApplianceClass(ApplianceClass.OnOffAppliance).applianceId);
     this.isKnown = this.applianceSwitch.stateValue != null && this.applianceSwitch.stateValue['on'] != undefined;
     this.isOn = this.isKnown && this.applianceSwitch.stateValue['on'] === true;
+
+    let state = this.applianceColor.stateValue;
+    this.selectedColor = `#` +
+        `${parseInt(state.red).toString(16).padStart(2, '0')}` +
+        `${parseInt(state.green).toString(16).padStart(2, '0')}` +
+        `${parseInt(state.blue).toString(16).padStart(2, '0')}`;
   }
 
   onSwitchChange(event: any) {
@@ -50,7 +57,7 @@ export class WdgtRgbwToggleComponent {
       });
   }
 
-  onColorChange(color: string) {
+  onColorChange(color: any) {
     let red: number = parseInt(color.substr(1, 2), 16);
     let green: number = parseInt(color.substr(3, 2), 16);
     let blue: number = parseInt(color.substr(5, 2), 16);
