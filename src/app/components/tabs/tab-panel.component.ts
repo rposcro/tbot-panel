@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import PanelTab from "../../shared/model/layout/panel.tab";
+import PanelTab from '../../shared/model/layout/panel.tab';
 
 @Component({
   selector: 'tab-panel',

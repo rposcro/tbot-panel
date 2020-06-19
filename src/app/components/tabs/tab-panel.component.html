@@ -1,4 +1,7 @@
 <div *ngFor="let widget of panelTab.widgets" [ngSwitch]="widget.type" class="tab-panel-item">
+  <ng-template [ngSwitchCase]="'ReportWidget'">
+    <wdgt-report [widget]="widget"></wdgt-report>
+  </ng-template>
   <ng-template [ngSwitchCase]="'ToggleWidget'">
     <wdgt-toggle [widget]="widget"></wdgt-toggle>
   </ng-template>

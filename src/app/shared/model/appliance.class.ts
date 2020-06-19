@@ -1,7 +1,8 @@
 enum ApplianceClass {
 
   OnOffAppliance = 'OnOffAppliance',
-  RGBWAppliance = 'RGBWAppliance'
+  RGBWAppliance = 'RGBWAppliance',
+  ReportAppliance = 'ReportAppliance'
 }
 
 export default ApplianceClass;
