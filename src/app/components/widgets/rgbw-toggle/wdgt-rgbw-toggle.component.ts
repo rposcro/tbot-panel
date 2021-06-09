@@ -35,11 +35,15 @@ export class WdgtRgbwToggleComponent {
     this.isKnown = this.applianceSwitch.stateValue != null && this.applianceSwitch.stateValue['on'] != undefined;
     this.isOn = this.isKnown && this.applianceSwitch.stateValue['on'] === true;
 
-    let state = this.applianceColor.stateValue;
-    this.selectedColor = `#` +
-        `${parseInt(state.red).toString(16).padStart(2, '0')}` +
-        `${parseInt(state.green).toString(16).padStart(2, '0')}` +
-        `${parseInt(state.blue).toString(16).padStart(2, '0')}`;
+    if (this.applianceColor.stateValue != undefined) {
+      let state = this.applianceColor.stateValue;
+      this.selectedColor = `#` +
+          `${parseInt(state.red).toString(16).padStart(2, '0')}` +
+          `${parseInt(state.green).toString(16).padStart(2, '0')}` +
+          `${parseInt(state.blue).toString(16).padStart(2, '0')}`;
+    } else {
+      this.selectedColor = '';
+    }
   }
 
   onSwitchChange(event: any) {

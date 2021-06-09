@@ -14,6 +14,6 @@ EXPOSE 4240 4241
 WORKDIR $DOCUMENT_ROOT/tbot/panel
 
 COPY dist/tbot-panel/* $DOCUMENT_ROOT/tbot/panel/
-COPY deployment/$RELEASE_PROFILE/apache/httpd.conf $APACHE_CONFIG
+COPY image/$RELEASE_PROFILE/apache/httpd.conf $APACHE_CONFIG
 
 ENTRYPOINT ["httpd", "-DFOREGROUND", "-k", "start"]
