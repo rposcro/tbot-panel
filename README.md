@@ -8,10 +8,14 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. 
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Consider correct `--base-href` option so service distribution is in sync with host configuration. All references from the application
+will be relative to the value so need to follow the main host proxy settings. See also source in **tbot-host** project.
+<br>
+Panel's docker container listens on port 4240 (4241 for staging) and and its document root is / 
 
-* For staging dockerized build use: `ng build --configuration=staging --base-href=/`
-* For production dockerized build use: `ng build --configuration=production --base-href=/`
+* For staging dockerized build use: `ng build --configuration=staging --base-href=/tbot/panel/`
+* For production dockerized build use: `ng build --configuration=production --base-href=/tbot/panel/`
 
 When selected project version (staging or production) is built, use `./build-docker.sh` to build docker image
 and export importable binary.
