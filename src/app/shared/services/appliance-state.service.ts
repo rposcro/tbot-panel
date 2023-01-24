@@ -13,7 +13,7 @@ export class ApplianceStateService {
 
   requestOnOffChange(applianceId: string, state: boolean): Promise<boolean> {
     let url = this.combineUrl(applianceId, 'on-off');
-    return this.sendRequest(url, { 'state': state});
+    return this.sendRequest(url, { 'on': state});
   }
 
   requestRGBWChange(applianceId: string, red: number, green: number, blue: number, white: number) {
