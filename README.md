@@ -5,6 +5,7 @@ This is Angular based UI panel application
 ## Start Application
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run start-proxied` to use local dev instance to hit production backend service.
 
 ## Build
 

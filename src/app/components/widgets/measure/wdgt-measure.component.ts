@@ -1,7 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {formatNumber} from "@angular/common";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ApplianceStateService} from "../../../shared/services/appliance-state.service";
 import {AppliancesService} from "../../../shared/services/appliances.service";
 import Widget from "../../../shared/model/layout/widget";
 import Appliance from "../../../shared/model/appliance";
@@ -19,17 +17,15 @@ export class WdgtMeasureComponent {
     @Input() widget: Widget;
 
     private appliance: Appliance;
+    private measure: Measure;
 
     public isKnown: boolean;
-    private measure: Measure;
-    private iconPath: string;
-    private reading: string;
-    private unit: string;
+    public iconPath: string;
+    public reading: string;
+    public unit: string;
 
     constructor(
-        private appliancesService: AppliancesService,
-        private stateService: ApplianceStateService,
-        private snackBar: MatSnackBar) {
+        private appliancesService: AppliancesService) {
     }
 
     ngOnInit() {
