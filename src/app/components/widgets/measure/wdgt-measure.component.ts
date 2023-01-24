@@ -1,11 +1,11 @@
 import {Component, Input} from '@angular/core';
+import {formatNumber} from "@angular/common";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ApplianceStateService} from "../../../shared/services/appliance-state.service";
 import {AppliancesService} from "../../../shared/services/appliances.service";
 import Widget from "../../../shared/model/layout/widget";
 import Appliance from "../../../shared/model/appliance";
 import Measure from "./measure";
-import {formatNumber} from "@angular/common";
 
 const DEFAULT_ICON_PATH = "assets/measure.svg";
 
@@ -64,7 +64,9 @@ export class WdgtMeasureComponent {
 
     private formatReading(value: number, decimals: number): string {
         let decimalDivider = Math.pow(10, decimals);
-        let reading = value / decimalDivider;
-        return formatNumber(reading, null, `1.${decimals}-${decimals}`);
+        let realValue = value / decimalDivider;
+        let reading = formatNumber(realValue, 'en-US', `1.${decimals}-${decimals}`);
+        console.log(reading);
+        return reading;
     }
 }
