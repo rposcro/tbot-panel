@@ -1,0 +1,11 @@
+{
+    "/tbot/ruler/*": {
+        "target": "http://localhost:4042",
+        "pathRewrite": {
+            "^/tbot/ruler": ""
+        },
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}
