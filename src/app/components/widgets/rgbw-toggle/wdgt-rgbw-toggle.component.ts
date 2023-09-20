@@ -67,7 +67,7 @@ export class WdgtRgbwToggleComponent {
 
     private resetState() {
         this.isKnown = isDefined(this.applianceColor.stateValue);
-        this.isOn = this.isKnown && this.applianceSwitch.stateValue['on'] === true;
+        this.isOn = this.isKnown && isDefined(this.applianceSwitch.stateValue) && this.applianceSwitch.stateValue['on'] === true;
 
         if (this.isKnown) {
             let state = this.applianceColor.stateValue;
