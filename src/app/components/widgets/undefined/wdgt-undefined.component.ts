@@ -19,6 +19,6 @@ export class WdgtUndefinedComponent {
   }
 
   ngOnInit() {
-    this.appliance = this.appliancesService.applianceById(this.widget.components[0].applianceId);
+    this.appliance = this.appliancesService.applianceById(this.widget.components[0].actuatorUuid);
   }
 }

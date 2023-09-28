@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {formatNumber} from "@angular/common";
-import {AppliancesService} from "../../../shared/services/appliances.service";
 import Widget from "../../../shared/model/layout/widget";
-import Appliance from "../../../shared/model/appliance";
+import Actuator from "../../../shared/model/actuator";
 import Measure from "./measure";
+import {ActuatorsService} from "../../../shared/services/actuators.service";
 
 const DEFAULT_ICON_PATH = "assets/measure.svg";
 
@@ -16,7 +16,7 @@ export class WdgtMeasureComponent {
 
     @Input() widget: Widget;
 
-    private appliance: Appliance;
+    private actuator: Actuator;
     private measure: Measure;
 
     public isKnown: boolean;
@@ -25,20 +25,19 @@ export class WdgtMeasureComponent {
     public unit: string;
 
     constructor(
-        private appliancesService: AppliancesService) {
+        private actuatorsService: ActuatorsService) {
     }
 
     ngOnInit() {
-        console.log(this.widget.id);
-        this.appliance = this.appliancesService.applianceById(this.widget.components[0].applianceId);
+        this.actuator = this.actuatorsService.actuatorByUuid(this.widget.components[0].actuatorUuid);
         this.resetState();
     }
 
     private resetState() {
-        this.isKnown = this.appliance.stateValue != null;
+        this.isKnown = this.actuator.state != null;
 
         if (this.isKnown) {
-            this.measure = this.appliance.stateValue as Measure;
+            this.measure = this.actuator.state as Measure;
             this.iconPath = this.pickIcon(this.measure.quantity);
             this.reading = this.formatReading(this.measure.value, this.measure.decimals);
             this.unit = this.measure.unit;

@@ -25,7 +25,7 @@ export class WdgtReportComponent {
 
   ngOnInit() {
     this.entryCount = '?';
-    this.appliance = this.appliancesService.applianceById(this.widget.components[0].applianceId);
+    this.appliance = this.appliancesService.applianceById(this.widget.components[0].actuatorUuid);
     let entries = this.appliance.stateValue as any[];
     this.entryCount = entries.length.toString();
   }

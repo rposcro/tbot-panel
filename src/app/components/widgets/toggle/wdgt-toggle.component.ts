@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ApplianceStateService} from "../../../shared/services/appliance-state.service";
-import {AppliancesService} from "../../../shared/services/appliances.service";
+import {ActuatorsService} from "../../../shared/services/actuators.service";
 import Widget from "../../../shared/model/layout/widget";
-import Appliance from "../../../shared/model/appliance";
+import Actuator from "../../../shared/model/actuator";
+import {ActuatorsStateService} from "../../../shared/services/actuators-state.service";
 
 @Component({
     selector: 'wdgt-toggle',
@@ -17,22 +17,22 @@ export class WdgtToggleComponent {
     public isKnown: boolean;
     public isOn: boolean;
 
-    private appliance: Appliance;
+    private actuator: Actuator;
 
     constructor(
-        private appliancesService: AppliancesService,
-        private stateService: ApplianceStateService,
+        private actuatorsService: ActuatorsService,
+        private actuatorsStateService: ActuatorsStateService,
         private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
-        this.appliance = this.appliancesService.applianceById(this.widget.components[0].applianceId);
-        this.isKnown = this.appliance.stateValue != null && this.appliance.stateValue['on'] != undefined;
-        this.isOn = this.isKnown && this.appliance.stateValue['on'] === true;
+        this.actuator = this.actuatorsService.actuatorByUuid(this.widget.components[0].actuatorUuid);
+        this.isKnown = this.actuator.state != null && this.actuator.state['on'] != undefined;
+        this.isOn = this.isKnown && this.actuator.state['on'] === true;
     }
 
     onStateChange(event: any) {
-        this.stateService.requestOnOffChange(this.appliance.id, !this.isOn)
+        this.actuatorsStateService.requestOnOffChange(this.widget.components[0].componentUuid, { 'on': !this.isOn })
             .then(value => {
                 console.log(`Received: ${value}`);
                 if (value) {

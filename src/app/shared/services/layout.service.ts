@@ -24,6 +24,7 @@ export class LayoutService {
             this.http.get<PanelLayout>(this.layoutUrl()).toPromise()
                 .then((layout) => {
                     this.layoutDefinition = layout;
+                    console.log(this.layoutDefinition);
                     resolve();
                 })
                 .catch((reason) => reject(reason))
