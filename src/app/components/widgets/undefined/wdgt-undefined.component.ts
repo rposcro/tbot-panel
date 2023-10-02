@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import {AppliancesService} from "../../../shared/services/appliances.service";
-import Appliance from "../../../shared/model/appliance";
 import Widget from "../../../shared/model/layout/widget";
+import {ActuatorsService} from "../../../shared/services/actuators.service";
+import Actuator from "../../../shared/model/actuator";
 
 @Component({
   selector: 'wdgt-undefined',
@@ -12,13 +12,13 @@ export class WdgtUndefinedComponent {
 
   @Input() widget: Widget;
 
-  public appliance: Appliance;
+  public actuator: Actuator;
 
   constructor(
-      private appliancesService: AppliancesService) {
+      private actuatorsService: ActuatorsService) {
   }
 
   ngOnInit() {
-    this.appliance = this.appliancesService.applianceById(this.widget.components[0].actuatorUuid);
+    this.actuator = this.actuatorsService.actuatorByUuid(this.widget.components[0].actuatorUuid);
   }
 }

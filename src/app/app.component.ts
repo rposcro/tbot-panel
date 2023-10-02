@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AppliancesService } from "./shared/services/appliances.service";
 import { LayoutService } from "./shared/services/layout.service";
 import {ActuatorsService} from "./shared/services/actuators.service";
 
@@ -14,7 +13,6 @@ export class AppComponent {
   public appInterrupted: boolean;
 
   constructor(
-    private appliancesService: AppliancesService,
     private actuatorsService: ActuatorsService,
     private layoutService: LayoutService) {
   }
@@ -32,7 +30,6 @@ export class AppComponent {
   }
 
   async initServices() {
-    await this.appliancesService.initialize();
     await this.actuatorsService.initialize();
     await this.layoutService.initialize();
   }

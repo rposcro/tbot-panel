@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { AppliancesService } from "../../../shared/services/appliances.service";
 import Widget from "../../../shared/model/layout/widget";
-import Appliance from "../../../shared/model/appliance";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { ReportDialogComponent } from "./report-dialog.component";
+import {ActuatorsService} from "../../../shared/services/actuators.service";
+import Actuator from "../../../shared/model/actuator";
 
 @Component({
   selector: 'wdgt-report',
@@ -16,17 +16,17 @@ export class WdgtReportComponent {
 
   public entryCount: String;
 
-  private appliance: Appliance;
+  private actuator: Actuator;
 
   constructor(
-      private appliancesService: AppliancesService,
+      private actuatorsService: ActuatorsService,
       private matDialog: MatDialog) {
   }
 
   ngOnInit() {
     this.entryCount = '?';
-    this.appliance = this.appliancesService.applianceById(this.widget.components[0].actuatorUuid);
-    let entries = this.appliance.stateValue as any[];
+    this.actuator = this.actuatorsService.actuatorByUuid(this.widget.components[0].actuatorUuid);
+    let entries = this.actuator.state as any[];
     this.entryCount = entries.length.toString();
   }
 
@@ -36,7 +36,7 @@ export class WdgtReportComponent {
     config.minWidth = "50%";
     config.minHeight = "60%";
     config.data = {
-      appliance: this.appliance
+      actuator: this.actuator
     };
 
     let dialogRef = this.matDialog.open(ReportDialogComponent, config);
