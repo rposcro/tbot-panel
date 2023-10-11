@@ -26,7 +26,10 @@ export class WdgtToggleComponent {
     }
 
     ngOnInit() {
-        this.actuator = this.actuatorsService.actuatorByUuid(this.widget.components[0].actuatorUuid);
+        let actuatorUuid = this.widget.components[0].actuatorUuid;
+        console.log(`wdtg-toggle ${this.widget.uuid}, ${actuatorUuid}`);
+        this.actuator = this.actuatorsService.actuatorByUuid(actuatorUuid);
+
         this.isKnown = this.actuator.state != null && this.actuator.state['on'] != undefined;
         this.isOn = this.isKnown && this.actuator.state['on'] === true;
     }
