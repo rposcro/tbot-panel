@@ -10,6 +10,7 @@ import { TabPanelComponent } from './components/tabs/tab-panel.component';
 import { WdgtToggleComponent } from './components/widgets/toggle/wdgt-toggle.component';
 import { WdgtRgbwToggleComponent } from "./components/widgets/rgbw-toggle/wdgt-rgbw-toggle.component";
 import { WdgtMeasureComponent } from "./components/widgets/measure/wdgt-measure.component";
+import { WdgtTriggerComponent } from './components/widgets/trigger/wdgt-trigger.component';
 import { WdgtUndefinedComponent } from './components/widgets/undefined/wdgt-undefined.component';
 
 import { WdgtReportModule } from './components/widgets/report/wdgt-report.module';
@@ -34,6 +35,7 @@ import { MccColorPickerModule } from "material-community-components";
     WdgtToggleComponent,
     WdgtRgbwToggleComponent,
     WdgtMeasureComponent,
+    WdgtTriggerComponent,
     WdgtUndefinedComponent
   ],
   imports: [

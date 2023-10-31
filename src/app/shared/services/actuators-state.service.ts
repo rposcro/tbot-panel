@@ -4,7 +4,6 @@ import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { ConfigurationService } from "./configuration.service";
 import OnOffState from "../model/state/on-off-state.class";
-import widgetType from "../model/layout/widget.type";
 import RgbwState from "../model/state/rgbw-state.class";
 
 @Injectable({
@@ -13,6 +12,14 @@ import RgbwState from "../model/state/rgbw-state.class";
 export class ActuatorsStateService {
 
   constructor(private http: HttpClient, private configuration: ConfigurationService) { }
+
+  requestTrigger(widgetUuid: string): Promise<boolean> {
+    let url = this.combineUrl();
+    return this.sendRequest(url, {
+      'widgetUuid': widgetUuid,
+      'payloadType': 'Trigger'
+    });
+  }
 
   requestOnOffChange(widgetUuid: string, state: OnOffState): Promise<boolean> {
     let url = this.combineUrl();

@@ -14,9 +14,9 @@
             </mcc-color-picker>
         </div>
         <div class="rgbw-label">
-          <ng-template [ngIf]="!isKnown">Unknown</ng-template>
-          <ng-template [ngIf]="isKnown && isOn">On</ng-template>
-          <ng-template [ngIf]="isKnown && !isOn">Off</ng-template>
+          <ng-template [ngIf]="!isSwitchKnown">Unknown</ng-template>
+          <ng-template [ngIf]="isSwitchKnown && isOn">On</ng-template>
+          <ng-template [ngIf]="isSwitchKnown && !isOn">Off</ng-template>
         </div>
       </div>
     </div>

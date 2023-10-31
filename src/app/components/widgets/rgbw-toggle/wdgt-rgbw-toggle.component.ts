@@ -23,7 +23,8 @@ export class WdgtRgbwToggleComponent {
     private switchActuator: Actuator;
     private colorActuator: Actuator;
 
-    public isKnown: boolean;
+    public isSwitchKnown: boolean;
+    public isColorKnown: boolean;
     public isOn: boolean;
     public selectedColor: String;
 
@@ -78,10 +79,11 @@ export class WdgtRgbwToggleComponent {
     }
 
     private resetState() {
-        this.isKnown = isDefined(this.colorActuator.state);
-        this.isOn = this.isKnown && isDefined(this.switchActuator.state) && this.switchActuator.state['on'] === true;
+        this.isSwitchKnown = isDefined(this.switchActuator.state);
+        this.isColorKnown = isDefined(this.colorActuator.state);
+        this.isOn = this.isSwitchKnown && isDefined(this.switchActuator.state) && this.switchActuator.state['on'] === true;
 
-        if (this.isKnown) {
+        if (this.isColorKnown) {
             let state = this.colorActuator.state;
             this.selectedColor = `#` +
                 `${parseInt(state.red).toString(16).padStart(2, '0')}` +
@@ -94,12 +96,12 @@ export class WdgtRgbwToggleComponent {
 
     private switchOnOffState() {
         this.isOn = !this.isOn;
-        this.isKnown = true;
+        this.isSwitchKnown = true;
     }
 
     private failOnOffState() {
         this.snackBar.open('Communication with server failed!', null, {duration: 5000});
         this.isOn = false;
-        this.isKnown = false;
+        this.isSwitchKnown = false;
     }
 }

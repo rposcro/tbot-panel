@@ -3,7 +3,8 @@ enum WidgetType {
   ToggleWidget = 'ToggleWidget',
   RGBWToggleWidget = 'RGBWToggleWidget',
   MeasureWidget = 'MeasureWidget',
-  ReportWidget = 'ReportWidget'
+  ReportWidget = 'ReportWidget',
+  TriggerWidget = 'TriggerWidget'
 }
 
 export default WidgetType;

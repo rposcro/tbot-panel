@@ -1,0 +1,12 @@
+  <mat-card class="actuator-pad">
+    <div class="actuator-pad-header">{{widget.name}}</div>
+    <div class="actuator-pad-content">
+      <div class="trigger-pad">
+        <div class="trigger-button">
+            <button mat-fab (click)="onTrigger($event)">
+                <mat-icon>start</mat-icon>
+            </button>
+        </div>
+      </div>
+    </div>
+  </mat-card>
