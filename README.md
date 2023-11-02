@@ -16,7 +16,6 @@ will be relative to the value so need to follow the main host proxy settings. Se
 <br>
 Panel's docker container listens on port 4240 (4241 for staging) and its document root is / 
 
-* For staging dockerized build use: `ng build --configuration=staging --base-href=/tbot/panel/`
 * For production dockerized build use: `ng build --configuration=production --base-href=/tbot/panel/`
 
 When selected project version (staging or production) build is completed successfully, use `./build-docker.sh` to build docker image
