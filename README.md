@@ -4,7 +4,7 @@ This is Angular based UI panel application
 
 ## Start Application
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4240/`. The app will automatically reload if you change any of the source files.
 Run `npm run start-proxied-prod` to use local dev instance to hit production backend service.
 Run `npm run start-proxied-dev` to use local dev instance to hit local dev backend service.
 
@@ -14,7 +14,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Consider correct `--base-href` option so service distribution is in sync with host configuration. All references from the application
 will be relative to the value so need to follow the main host proxy settings. See also source in **tbot-host** project.
 <br>
-Panel's docker container listens on port 4240 (4241 for staging) and its document root is / 
+Panel's docker container listens on port 4240 and its document root is / 
 
 * For production dockerized build use: `ng build --configuration=production --base-href=/tbot/panel/`
 

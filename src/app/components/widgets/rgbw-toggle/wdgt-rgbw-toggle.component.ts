@@ -35,10 +35,13 @@ export class WdgtRgbwToggleComponent {
     }
 
     ngOnInit() {
+        console.log(`Rendering widget ${this.widget.uuid}`);
         this.switchComponent = this.componentByComponentClass(ApplianceClass.OnOffAppliance);
         this.colorComponent = this.componentByComponentClass(ApplianceClass.RGBWAppliance)
         this.switchActuator = this.actuatorsService.actuatorByUuid(this.switchComponent.actuatorUuid);
         this.colorActuator = this.actuatorsService.actuatorByUuid(this.colorComponent.actuatorUuid);
+        console.log(`Switch: ${this.switchComponent.actuatorUuid}, Color component: ${this.colorComponent.actuatorUuid}`);
+        console.log(`Switch found: ${isDefined(this.switchActuator)}, Color found: ${isDefined(this.colorActuator)}`);
         this.resetState();
     }
 
@@ -73,9 +76,13 @@ export class WdgtRgbwToggleComponent {
     }
 
     public componentByComponentClass(componentClass: ApplianceClass): WidgetComponent {
-        return this.widget.components.find(
+        let wantedComponent = this.widget.components.find(
             component => component.componentClass == componentClass
         );
+        if (!isDefined(wantedComponent)) {
+            console.log(`Component of class ${componentClass} not on widget ${this.widget.uuid}! Widget components ${this.widget.components}`);
+        }
+        return wantedComponent;
     }
 
     private resetState() {
@@ -90,7 +97,7 @@ export class WdgtRgbwToggleComponent {
                 `${parseInt(state.green).toString(16).padStart(2, '0')}` +
                 `${parseInt(state.blue).toString(16).padStart(2, '0')}`;
         } else {
-          this.selectedColor = '';
+            this.selectedColor = '';
         }
     }
 

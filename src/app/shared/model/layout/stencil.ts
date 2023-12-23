@@ -1,9 +1,9 @@
 import PanelLayout from "./panel.layout";
 
-export default interface Schema {
+export default interface Stencil {
 
-    schema_id: number;
-    schema_uuid: string;
+    stencil_id: number;
+    stencil_uuid: string;
     owner: string;
     type: string;
     payload: PanelLayout;

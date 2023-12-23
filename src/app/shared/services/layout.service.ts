@@ -3,10 +3,10 @@ import {HttpClient} from '@angular/common/http';
 
 import {ConfigurationService} from "./configuration.service";
 import PanelLayout from "../model/layout/panel.layout";
-import Schema from "../model/layout/schema";
+import Stencil from "../model/layout/stencil";
 
-const SCHEMA_OWNER: string = 'tbot-panel';
-const SCHEMA_TYPE: string = 'layout';
+const STENCIL_OWNER: string = 'tbot-panel';
+const STENCIL_TYPE: string = 'layout';
 
 @Injectable({
     providedIn: 'root'
@@ -25,9 +25,9 @@ export class LayoutService {
 
     initialize() {
         return new Promise((resolve, reject) => {
-            this.http.get<Schema>(this.layoutUrl()).toPromise()
-                .then((schema) => {
-                    this.layoutDefinition = schema.payload;
+            this.http.get<Stencil>(this.layoutUrl()).toPromise()
+                .then((stencil) => {
+                    this.layoutDefinition = stencil.payload;
                     console.log(this.layoutDefinition);
                     resolve();
                 })
@@ -36,6 +36,6 @@ export class LayoutService {
     }
 
     private layoutUrl(): string {
-        return `${this.configuration.apiUrl()}/admin/schemas/owners/${SCHEMA_OWNER}/types/${SCHEMA_TYPE}`;
+        return `${this.configuration.apiUrl()}/admin/stencils/owners/${STENCIL_OWNER}/types/${STENCIL_TYPE}`;
     }
 }
