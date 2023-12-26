@@ -4,6 +4,7 @@ import Widget from "../../../shared/model/layout/widget";
 import Actuator from "../../../shared/model/actuator";
 import Measure from "./measure";
 import {ActuatorsService} from "../../../shared/services/actuators.service";
+import {isDefined} from "@angular/compiler/src/util";
 
 const DEFAULT_ICON_PATH = "assets/measure.svg";
 
@@ -29,14 +30,21 @@ export class WdgtMeasureComponent {
     }
 
     ngOnInit() {
+        console.log(`Rendering widget ${this.widget.uuid}`);
         this.actuator = this.actuatorsService.actuatorByUuid(this.widget.components[0].actuatorUuid);
         this.resetState();
     }
 
     private resetState() {
-        this.isKnown = this.actuator.state != null;
+        this.isKnown = isDefined(this.actuator) && this.actuator.state != null;
 
-        if (this.isKnown) {
+        if (!isDefined(this.actuator)) {
+            this.measure = null;
+            this.iconPath = DEFAULT_ICON_PATH;
+            this.reading = 'Error';
+            this.unit = '--';
+            console.log(`Unknown actuator ${this.widget.components[0].actuatorUuid}`)
+        } else if (this.isKnown) {
             this.measure = this.actuator.state as Measure;
             this.iconPath = this.pickIcon(this.measure.quantity);
             this.reading = this.formatReading(this.measure.value, this.measure.decimals);
