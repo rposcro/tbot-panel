@@ -1,12 +1,13 @@
 import {Component, Input} from '@angular/core';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ActuatorsService} from "../../../shared/services/actuators.service";
-import Widget from "../../../shared/model/layout/widget";
-import Actuator from "../../../shared/model/actuator";
-import {ActuatorsStateService} from "../../../shared/services/actuators-state.service";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ActuatorsService} from '../../../shared/services/actuators.service';
+import Widget from '../../../shared/model/layout/widget';
+import Actuator from '../../../shared/model/actuator';
+import {ActuatorsStateService} from '../../../shared/services/actuators-state.service';
 
 @Component({
     selector: 'wdgt-toggle',
+    standalone: false,
     templateUrl: './wdgt-toggle.component.html',
     styleUrls: ['./wdgt-toggle.component.scss']
 })

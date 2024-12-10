@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { DOCUMENT } from "@angular/common";
+import { DOCUMENT } from '@angular/common';
 
-import { environment } from "../../../environments/environment";
+import { environment } from '../../../environments/environment';
 
 const REPLACEMENT_HOST_URL: string = '${hostUrl}';
 const REPLACEMENT_HOST_SCHEMA: string = '${hostSchema}';

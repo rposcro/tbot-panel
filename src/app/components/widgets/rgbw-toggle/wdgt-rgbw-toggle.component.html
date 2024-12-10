@@ -6,12 +6,13 @@
             <mat-slide-toggle checked="{{isOn}}" (click)="onSwitchChange($event)"></mat-slide-toggle>
         </div>
         <div class="rgbw-picker">
-            <mcc-color-picker
-                    hideUsedColors="true"
-                    class="rgbw-color-picker"
-                    selectedColor="{{selectedColor}}"
-                    (selected)="onColorChange($event)">
-            </mcc-color-picker>
+            <ngx-colors
+                ngx-colors-trigger
+                (input)="onColorChange($event)"
+                [(ngModel)]="selectedColor"
+                [format] = "'hex'"
+                colorsAnimation="popup"
+                ></ngx-colors>
         </div>
         <div class="rgbw-label">
           <ng-template [ngIf]="!isSwitchKnown">Unknown</ng-template>

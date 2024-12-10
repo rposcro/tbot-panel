@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
-import Actuator from "../model/actuator";
-import {ConfigurationService} from "./configuration.service";
+import Actuator from '../model/actuator';
+import {ConfigurationService} from './configuration.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,21 +19,21 @@ export class ActuatorsService {
         return this.actuators;
     }
 
-    actuatorByUuid(uuid: string) {
-        return this.actuatorsPerUuid.get(uuid);
+    actuatorByUuid(uuid: string): Actuator {
+        let actuator = this.actuatorsPerUuid.get(uuid);
+        if (!actuator) {
+            throw `No actuator found for uuid ${uuid}!`;
+        }
+        return actuator;
     }
 
     initialize() {
-        return new Promise((resolve, reject) => {
-            this.http.get<Actuator[]>(this.actuatorsUrl()).toPromise()
-                .then((actuators) => {
-                    this.actuators = actuators;
-                    this.actuatorsPerUuid = new Map();
-                    actuators.forEach(actuator => this.actuatorsPerUuid.set(actuator.uuid, actuator));
-                    resolve();
-                })
-                .catch((reason) => reject(reason))
-        });
+        return this.http.get<Actuator[]>(this.actuatorsUrl())
+            .forEach(actuators => {
+                this.actuators = actuators;
+                this.actuatorsPerUuid = new Map();
+                actuators.forEach(actuator => this.actuatorsPerUuid.set(actuator.uuid, actuator));
+            });
     }
 
     private actuatorsUrl(): string {

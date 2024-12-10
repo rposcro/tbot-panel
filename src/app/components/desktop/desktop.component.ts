@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import PanelLayout from "../../shared/model/layout/panel.layout";
-import { LayoutService } from "../../shared/services/layout.service";
+import {Component, OnInit} from '@angular/core';
+import PanelLayout from '../../shared/model/layout/panel.layout';
+import {LayoutService} from '../../shared/services/layout.service';
 
 @Component({
-  selector: 'desktop',
-  templateUrl: './desktop.component.html',
-  styleUrls: ['./desktop.component.scss']
+    selector: 'desktop',
+    standalone: false,
+    templateUrl: './desktop.component.html',
+    styleUrls: ['./desktop.component.scss']
 })
 export class DesktopComponent implements OnInit {
 
-  panelLayout: PanelLayout;
+    panelLayout: PanelLayout;
 
-  constructor(private layoutService: LayoutService) {
-  }
+    constructor(private layoutService: LayoutService) {
+    }
 
-  ngOnInit() {
-    this.panelLayout = this.layoutService.getPanelLayoutDefinition();
-  }
+    ngOnInit() {
+        this.panelLayout = this.layoutService.getPanelLayoutDefinition();
+    }
 }

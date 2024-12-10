@@ -1,15 +1,15 @@
 import {Component, Input} from '@angular/core';
-import {formatNumber} from "@angular/common";
-import Widget from "../../../shared/model/layout/widget";
-import Actuator from "../../../shared/model/actuator";
-import Measure from "./measure";
-import {ActuatorsService} from "../../../shared/services/actuators.service";
-import {isDefined} from "@angular/compiler/src/util";
+import {formatNumber} from '@angular/common';
+import Widget from '../../../shared/model/layout/widget';
+import Actuator from '../../../shared/model/actuator';
+import Measure from './measure';
+import {ActuatorsService} from '../../../shared/services/actuators.service';
 
 const DEFAULT_ICON_PATH = "assets/measure.svg";
 
 @Component({
     selector: 'wdgt-measure',
+    standalone: false,
     templateUrl: './wdgt-measure.component.html',
     styleUrls: ['./wdgt-measure.component.scss']
 })
@@ -36,9 +36,9 @@ export class WdgtMeasureComponent {
     }
 
     private resetState() {
-        this.isKnown = isDefined(this.actuator) && this.actuator.state != null;
+        this.isKnown = this.actuator && this.actuator.state != null;
 
-        if (!isDefined(this.actuator)) {
+        if (!this.actuator) {
             this.measure = null;
             this.iconPath = DEFAULT_ICON_PATH;
             this.reading = 'Error';

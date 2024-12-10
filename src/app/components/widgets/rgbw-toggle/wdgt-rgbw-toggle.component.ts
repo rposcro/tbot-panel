@@ -1,15 +1,15 @@
 import {Component, Input} from '@angular/core';
-import {MatSnackBar} from "@angular/material/snack-bar";
-import Widget from "../../../shared/model/layout/widget";
-import ApplianceClass from "../../../shared/model/appliance.class";
-import WidgetComponent from "../../../shared/model/layout/widget.component";
-import {isDefined} from "@angular/compiler/src/util";
-import Actuator from "../../../shared/model/actuator";
-import {ActuatorsService} from "../../../shared/services/actuators.service";
-import {ActuatorsStateService} from "../../../shared/services/actuators-state.service";
+import {MatSnackBar} from '@angular/material/snack-bar';
+import Widget from '../../../shared/model/layout/widget';
+import ApplianceClass from '../../../shared/model/appliance.class';
+import WidgetComponent from '../../../shared/model/layout/widget.component';
+import Actuator from '../../../shared/model/actuator';
+import {ActuatorsService} from '../../../shared/services/actuators.service';
+import {ActuatorsStateService} from '../../../shared/services/actuators-state.service';
 
 @Component({
     selector: 'wdgt-rgbw-toggle',
+    standalone: false,
     templateUrl: './wdgt-rgbw-toggle.component.html',
     styleUrls: ['./wdgt-rgbw-toggle.component.scss']
 })
@@ -40,13 +40,13 @@ export class WdgtRgbwToggleComponent {
         this.colorComponent = this.componentByComponentClass(ApplianceClass.RGBWAppliance)
         this.switchActuator = this.actuatorsService.actuatorByUuid(this.switchComponent.actuatorUuid);
         this.colorActuator = this.actuatorsService.actuatorByUuid(this.colorComponent.actuatorUuid);
-        console.log(`Switch: ${this.switchComponent.actuatorUuid}, Color component: ${this.colorComponent.actuatorUuid}`);
-        console.log(`Switch found: ${isDefined(this.switchActuator)}, Color found: ${isDefined(this.colorActuator)}`);
         this.resetState();
+        console.log(`Switch: ${this.switchComponent.actuatorUuid}, Color component: ${this.colorComponent.actuatorUuid}`);
+        console.log(`Switch found: ${this.isSwitchKnown}, Color found: ${this.isColorKnown}`);
     }
 
     onSwitchChange(event: any) {
-        this.actuatorsStateService.requestOnOffChange(this.switchComponent.componentUuid, { 'on' : !this.isOn })
+        this.actuatorsStateService.requestOnOffChange(this.switchComponent.componentUuid, {'on': !this.isOn})
             .then(value => {
                 if (value) {
                     this.switchOnOffState();
@@ -60,11 +60,16 @@ export class WdgtRgbwToggleComponent {
             });
     }
 
-    onColorChange(color: any) {
-        let red: number = parseInt(color.substr(1, 2), 16);
-        let green: number = parseInt(color.substr(3, 2), 16);
-        let blue: number = parseInt(color.substr(5, 2), 16);
-        let white: number = Math.round((red + green + blue) / 3);
+    onColorChange(color: string) {
+        let red: number = parseInt(color.substring(1, 3), 16);
+        let green: number = parseInt(color.substring(3, 5), 16);
+        let blue: number = parseInt(color.substring(5, 7), 16);
+        let white: number = 255;
+
+        if (color.length == 9) {
+            white = parseInt(color.substring(7, 9), 16);
+        }
+
         let statePayload = {
             'red': red,
             'green': green,
@@ -79,23 +84,24 @@ export class WdgtRgbwToggleComponent {
         let wantedComponent = this.widget.components.find(
             component => component.componentClass == componentClass
         );
-        if (!isDefined(wantedComponent)) {
+        if (!wantedComponent) {
             console.log(`Component of class ${componentClass} not on widget ${this.widget.uuid}! Widget components ${this.widget.components}`);
         }
         return wantedComponent;
     }
 
     private resetState() {
-        this.isSwitchKnown = isDefined(this.switchActuator.state);
-        this.isColorKnown = isDefined(this.colorActuator.state);
-        this.isOn = this.isSwitchKnown && isDefined(this.switchActuator.state) && this.switchActuator.state['on'] === true;
+        this.isSwitchKnown = this.switchActuator.state;
+        this.isColorKnown = this.colorActuator.state;
+        this.isOn = this.isSwitchKnown && this.switchActuator.state && this.switchActuator.state['on'] === true;
 
         if (this.isColorKnown) {
             let state = this.colorActuator.state;
             this.selectedColor = `#` +
                 `${parseInt(state.red).toString(16).padStart(2, '0')}` +
                 `${parseInt(state.green).toString(16).padStart(2, '0')}` +
-                `${parseInt(state.blue).toString(16).padStart(2, '0')}`;
+                `${parseInt(state.blue).toString(16).padStart(2, '0')}` +
+                `${parseInt(state.white).toString(16).padStart(2, '0')}`;
         } else {
             this.selectedColor = '';
         }

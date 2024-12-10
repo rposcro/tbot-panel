@@ -1,7 +1,7 @@
 <toolbar></toolbar>
 <ng-container *ngIf="appInitialized">
-  <desktop></desktop>
+    <desktop></desktop>
 </ng-container>
-<ng-container *ngIf="appInterrupted">
-  Error!!!
+<ng-container *ngIf="!appInitialized">
+    Error!!!
 </ng-container>

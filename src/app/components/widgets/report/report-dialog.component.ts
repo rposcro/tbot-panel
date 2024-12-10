@@ -1,8 +1,10 @@
 import {Component, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import Actuator from "../../../shared/model/actuator";
 
 @Component({
   selector: 'report-dialog',
+  standalone: false,
   templateUrl: './report-dialog.component.html',
   styleUrls: ['./report-dialog.component.scss']
 })
@@ -12,12 +14,14 @@ export class ReportDialogComponent {
   public rows: ReportRow[];
   public title: string;
 
-  constructor(private dialogRef: MatDialogRef<ReportDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) data) {
-    this.title = data.appliance.name;
+  constructor(
+      private dialogRef: MatDialogRef<ReportDialogComponent>,
+      @Inject(MAT_DIALOG_DATA) private actuator: Actuator
+  ) {
+    this.title = actuator.name;
     this.rows = new Array<ReportRow>();
 
-    let entries = data.appliance.stateValue as any[];
+    let entries = actuator.state as any[];
     entries.forEach(entry => {
       let row: ReportRow = {
         message: entry['message'],

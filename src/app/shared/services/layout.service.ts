@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {ConfigurationService} from "./configuration.service";
-import PanelLayout from "../model/layout/panel.layout";
-import Stencil from "../model/layout/stencil";
+import {ConfigurationService} from './configuration.service';
+import PanelLayout from '../model/layout/panel.layout';
+import Stencil from '../model/layout/stencil';
 
 const STENCIL_OWNER: string = 'tbot-panel';
 const STENCIL_TYPE: string = 'layout';
@@ -13,7 +13,6 @@ const STENCIL_TYPE: string = 'layout';
 })
 export class LayoutService {
 
-    private urlComposition = 'assets/composition/composition.json';
     private layoutDefinition: PanelLayout;
 
     constructor(private http: HttpClient, private configuration: ConfigurationService) {
@@ -24,15 +23,11 @@ export class LayoutService {
     }
 
     initialize() {
-        return new Promise((resolve, reject) => {
-            this.http.get<Stencil>(this.layoutUrl()).toPromise()
-                .then((stencil) => {
-                    this.layoutDefinition = stencil.payload;
-                    console.log(this.layoutDefinition);
-                    resolve();
-                })
-                .catch((reason) => reject(reason))
-        });
+        return this.http.get<Stencil>(this.layoutUrl())
+            .forEach(stencil => {
+                this.layoutDefinition = stencil.payload;
+                console.log(this.layoutDefinition);
+            });
     }
 
     private layoutUrl(): string {
