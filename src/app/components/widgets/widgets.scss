@@ -1,10 +1,10 @@
 .actuator-pad {
   display: grid;
-  grid-template-columns: 140px;
-  grid-template-rows: 20px 75px;
+  //grid-template-columns: 140px;
+  //grid-template-rows: 20px 75px;
   grid-gap: 5px;
-  width: 140px;
-  height: 100px;
+  width: 160px;
+  height: 120px;
   padding: 5px;
   margin: 20px 10px 0px 10px;
   border: 1px yellow solid;
@@ -17,7 +17,7 @@
   align-self: center;
   margin: 0px;
   padding: 0px;
-  width: 138px;
+  width: 100%;
   height: 18px;
   text-align: center;
   //border: 1px black solid;
