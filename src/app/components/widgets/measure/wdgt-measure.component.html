@@ -1,0 +1,18 @@
+<mat-card class="actuator-pad">
+    <div class="actuator-pad-header">{{widget.name}}</div>
+    <div class="actuator-pad-content">
+        <div class="measure-pad">
+            <div class="measure-grid">
+                <div class="measure-icon">
+                    <img [src]="iconPath"/>
+                </div>
+                <div class="measure-value">
+                    <div>{{this.reading}}</div>
+                </div>
+                <div class="measure-unit">
+                    <div>{{this.unit}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>

@@ -1,7 +1,39 @@
 @import "../widgets";
 
+.rgbw-pad {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-gap: 3px;
+  width: 100%;
+  height: 100%;
+  //border: 1px red solid;
+}
+
+.rgbw-switch {
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: end;
+  align-self: end;
+  padding: 0px 0px 3px 0px;
+  //border: 1px red solid;
+}
+.rgbw-picker {
+  grid-row: 1;
+  grid-column: 2;
+  justify-self: start;
+  align-self: end;
+  padding: 0px 0px 3px 10px;
+  //border: 1px red solid;
+}
+
+.rgbw-label {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  justify-self: center;
+  align-self: start;
+  //border: 1px red solid;
+}
+
 .rgbw-color-picker {
-  margin-left: 15px;
-  color: black;
-  background-color: bisque;
 }

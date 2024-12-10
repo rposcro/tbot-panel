@@ -1,61 +1,64 @@
-import { Component, Input } from '@angular/core';
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { ApplianceStateService} from "../../../shared/services/appliance-state.service";
-import { AppliancesService } from "../../../shared/services/appliances.service";
+import {Component, Input} from '@angular/core';
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ActuatorsService} from "../../../shared/services/actuators.service";
 import Widget from "../../../shared/model/layout/widget";
-import Appliance from "../../../shared/model/appliance";
+import Actuator from "../../../shared/model/actuator";
+import {ActuatorsStateService} from "../../../shared/services/actuators-state.service";
 
 @Component({
-  selector: 'wdgt-toggle',
-  templateUrl: './wdgt-toggle.component.html',
-  styleUrls: ['./wdgt-toggle.component.scss']
+    selector: 'wdgt-toggle',
+    templateUrl: './wdgt-toggle.component.html',
+    styleUrls: ['./wdgt-toggle.component.scss']
 })
 export class WdgtToggleComponent {
 
-  @Input() widget: Widget;
+    @Input() widget: Widget;
 
-  public isKnown: boolean;
-  public isOn: boolean;
+    public isKnown: boolean;
+    public isOn: boolean;
 
-  private appliance: Appliance;
+    private actuator: Actuator;
 
-  constructor(
-      private appliancesService: AppliancesService,
-      private stateService: ApplianceStateService,
-      private snackBar: MatSnackBar) {
-  }
+    constructor(
+        private actuatorsService: ActuatorsService,
+        private actuatorsStateService: ActuatorsStateService,
+        private snackBar: MatSnackBar) {
+    }
 
-  ngOnInit() {
-    this.appliance = this.appliancesService.applianceById(this.widget.components[0].applianceId);
-    this.isKnown = this.appliance.stateValue != null && this.appliance.stateValue['on'] != undefined;
-    this.isOn = this.isKnown && this.appliance.stateValue['on'] === true;
-  }
+    ngOnInit() {
+        let actuatorUuid = this.widget.components[0].actuatorUuid;
+        console.log(`wdtg-toggle ${this.widget.uuid}, ${actuatorUuid}`);
+        this.actuator = this.actuatorsService.actuatorByUuid(actuatorUuid);
 
-  onStateChange(event: any) {
-    this.stateService.requestOnOffChange(this.appliance.id, !this.isOn)
-      .then(value => {
-        console.log(`Received: ${value}`);
-        if (value) {
-          this.switchState();
-        } else {
-          this.failState();
-        }
-      })
-      .catch(reason => {
-        console.log(`Request failed: ${reason}`);
-        this.failState();
-      });
-    return false;
-  }
+        this.isKnown = this.actuator.state != null && this.actuator.state['on'] != undefined;
+        this.isOn = this.isKnown && this.actuator.state['on'] === true;
+    }
 
-  private switchState() {
-    this.isOn = !this.isOn;
-    this.isKnown = true;
-  }
+    onStateChange(event: any) {
+        this.actuatorsStateService.requestOnOffChange(this.widget.components[0].componentUuid, { 'on': !this.isOn })
+            .then(value => {
+                console.log(`Received: ${value}`);
+                if (value) {
+                    this.switchState();
+                } else {
+                    this.failState();
+                }
+            })
+            .catch(reason => {
+                console.log(`Request failed: ${reason}`);
+                this.failState();
+            });
+        return false;
+    }
 
-  private failState() {
-    this.snackBar.open('Communication with server failed!', null, { duration: 5000 });
-    this.isOn = false;
-    this.isKnown = false;
-  }
+    private switchState() {
+        this.isOn = !this.isOn;
+        this.isKnown = true;
+    }
+
+    private failState() {
+        this.snackBar.open('Communication with server failed!', null, {duration: 5000});
+        this.isOn = false;
+        this.isKnown = false;
+    }
 }

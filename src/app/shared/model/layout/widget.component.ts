@@ -2,6 +2,7 @@ import ApplianceClass from "../appliance.class";
 
 export default interface WidgetComponent {
 
-    applianceId: string;
-    applianceClass: ApplianceClass;
+    componentUuid: string;
+    componentClass: ApplianceClass;
+    actuatorUuid: string;
 }

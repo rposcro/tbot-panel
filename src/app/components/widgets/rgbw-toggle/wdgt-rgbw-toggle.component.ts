@@ -1,84 +1,114 @@
 import {Component, Input} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ApplianceStateService} from "../../../shared/services/appliance-state.service";
-import {AppliancesService} from "../../../shared/services/appliances.service";
 import Widget from "../../../shared/model/layout/widget";
-import Appliance from "../../../shared/model/appliance";
 import ApplianceClass from "../../../shared/model/appliance.class";
 import WidgetComponent from "../../../shared/model/layout/widget.component";
+import {isDefined} from "@angular/compiler/src/util";
+import Actuator from "../../../shared/model/actuator";
+import {ActuatorsService} from "../../../shared/services/actuators.service";
+import {ActuatorsStateService} from "../../../shared/services/actuators-state.service";
 
 @Component({
-  selector: 'wdgt-rgbw-toggle',
-  templateUrl: './wdgt-rgbw-toggle.component.html',
-  styleUrls: ['./wdgt-rgbw-toggle.component.scss']
+    selector: 'wdgt-rgbw-toggle',
+    templateUrl: './wdgt-rgbw-toggle.component.html',
+    styleUrls: ['./wdgt-rgbw-toggle.component.scss']
 })
 export class WdgtRgbwToggleComponent {
 
-  @Input() widget: Widget;
+    @Input() widget: Widget;
 
-  public isKnown: boolean;
-  public isOn: boolean;
-  public selectedColor: String;
+    private switchComponent: WidgetComponent;
+    private colorComponent: WidgetComponent;
 
-  private applianceSwitch: Appliance;
-  private applianceColor: Appliance;
+    private switchActuator: Actuator;
+    private colorActuator: Actuator;
 
-  constructor(
-      private appliancesService: AppliancesService,
-      private stateService: ApplianceStateService,
-      private snackBar: MatSnackBar) {
-  }
+    public isSwitchKnown: boolean;
+    public isColorKnown: boolean;
+    public isOn: boolean;
+    public selectedColor: String;
 
-  ngOnInit() {
-    this.applianceColor = this.appliancesService.applianceById(this.componentByApplianceClass(ApplianceClass.RGBWAppliance).applianceId);
-    this.applianceSwitch = this.appliancesService.applianceById(this.componentByApplianceClass(ApplianceClass.OnOffAppliance).applianceId);
-    this.isKnown = this.applianceSwitch.stateValue != null && this.applianceSwitch.stateValue['on'] != undefined;
-    this.isOn = this.isKnown && this.applianceSwitch.stateValue['on'] === true;
+    constructor(
+        private actuatorsService: ActuatorsService,
+        private actuatorsStateService: ActuatorsStateService,
+        private snackBar: MatSnackBar) {
+    }
 
-    let state = this.applianceColor.stateValue;
-    this.selectedColor = `#` +
-        `${parseInt(state.red).toString(16).padStart(2, '0')}` +
-        `${parseInt(state.green).toString(16).padStart(2, '0')}` +
-        `${parseInt(state.blue).toString(16).padStart(2, '0')}`;
-  }
+    ngOnInit() {
+        console.log(`Rendering widget ${this.widget.uuid}`);
+        this.switchComponent = this.componentByComponentClass(ApplianceClass.OnOffAppliance);
+        this.colorComponent = this.componentByComponentClass(ApplianceClass.RGBWAppliance)
+        this.switchActuator = this.actuatorsService.actuatorByUuid(this.switchComponent.actuatorUuid);
+        this.colorActuator = this.actuatorsService.actuatorByUuid(this.colorComponent.actuatorUuid);
+        console.log(`Switch: ${this.switchComponent.actuatorUuid}, Color component: ${this.colorComponent.actuatorUuid}`);
+        console.log(`Switch found: ${isDefined(this.switchActuator)}, Color found: ${isDefined(this.colorActuator)}`);
+        this.resetState();
+    }
 
-  onSwitchChange(event: any) {
-    this.stateService.requestOnOffChange(this.applianceSwitch.id, !this.isOn)
-      .then(value => {
-        if (value) {
-          this.switchOnOffState();
-        } else {
-          this.failOnOffState();
+    onSwitchChange(event: any) {
+        this.actuatorsStateService.requestOnOffChange(this.switchComponent.componentUuid, { 'on' : !this.isOn })
+            .then(value => {
+                if (value) {
+                    this.switchOnOffState();
+                } else {
+                    this.failOnOffState();
+                }
+            })
+            .catch(reason => {
+                console.log(`Request failed: ${reason}`);
+                this.failOnOffState();
+            });
+    }
+
+    onColorChange(color: any) {
+        let red: number = parseInt(color.substr(1, 2), 16);
+        let green: number = parseInt(color.substr(3, 2), 16);
+        let blue: number = parseInt(color.substr(5, 2), 16);
+        let white: number = Math.round((red + green + blue) / 3);
+        let statePayload = {
+            'red': red,
+            'green': green,
+            'blue': blue,
+            'white': white
+        };
+
+        this.actuatorsStateService.requestRGBWChange(this.colorComponent.componentUuid, statePayload);
+    }
+
+    public componentByComponentClass(componentClass: ApplianceClass): WidgetComponent {
+        let wantedComponent = this.widget.components.find(
+            component => component.componentClass == componentClass
+        );
+        if (!isDefined(wantedComponent)) {
+            console.log(`Component of class ${componentClass} not on widget ${this.widget.uuid}! Widget components ${this.widget.components}`);
         }
-      })
-      .catch(reason => {
-        console.log(`Request failed: ${reason}`);
-        this.failOnOffState();
-      });
-  }
+        return wantedComponent;
+    }
 
-  onColorChange(color: any) {
-    let red: number = parseInt(color.substr(1, 2), 16);
-    let green: number = parseInt(color.substr(3, 2), 16);
-    let blue: number = parseInt(color.substr(5, 2), 16);
-    let white: number = Math.round((red + green + blue) / 3);
-    this.stateService.requestRGBWChange(this.applianceColor.id, red, green, blue, white);
-  }
+    private resetState() {
+        this.isSwitchKnown = isDefined(this.switchActuator.state);
+        this.isColorKnown = isDefined(this.colorActuator.state);
+        this.isOn = this.isSwitchKnown && isDefined(this.switchActuator.state) && this.switchActuator.state['on'] === true;
 
-  public componentByApplianceClass(applianceClass: ApplianceClass): WidgetComponent {
-    return this.widget.components.find(
-        component => component.applianceClass == applianceClass
-    );
-  }
+        if (this.isColorKnown) {
+            let state = this.colorActuator.state;
+            this.selectedColor = `#` +
+                `${parseInt(state.red).toString(16).padStart(2, '0')}` +
+                `${parseInt(state.green).toString(16).padStart(2, '0')}` +
+                `${parseInt(state.blue).toString(16).padStart(2, '0')}`;
+        } else {
+            this.selectedColor = '';
+        }
+    }
 
-  private switchOnOffState() {
-    this.isOn = !this.isOn;
-    this.isKnown = true;
-  }
+    private switchOnOffState() {
+        this.isOn = !this.isOn;
+        this.isSwitchKnown = true;
+    }
 
-  private failOnOffState() {
-    this.snackBar.open('Communication with server failed!', null, { duration: 5000 });
-    this.isOn = false;
-    this.isKnown = false;
-  }
+    private failOnOffState() {
+        this.snackBar.open('Communication with server failed!', null, {duration: 5000});
+        this.isOn = false;
+        this.isSwitchKnown = false;
+    }
 }

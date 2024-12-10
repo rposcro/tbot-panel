@@ -1,9 +1,11 @@
   <mat-card class="actuator-pad">
     <div class="actuator-pad-header">{{widget.name}}</div>
     <div class="actuator-pad-content">
-      <div>
-        <div>
+      <div class="rgbw-pad">
+        <div class="rgbw-switch">
             <mat-slide-toggle checked="{{isOn}}" (click)="onSwitchChange($event)"></mat-slide-toggle>
+        </div>
+        <div class="rgbw-picker">
             <mcc-color-picker
                     hideUsedColors="true"
                     class="rgbw-color-picker"
@@ -11,10 +13,10 @@
                     (selected)="onColorChange($event)">
             </mcc-color-picker>
         </div>
-        <div>
-          <ng-template [ngIf]="!isKnown">Unknown</ng-template>
-          <ng-template [ngIf]="isKnown && isOn">On</ng-template>
-          <ng-template [ngIf]="isKnown && !isOn">Off</ng-template>
+        <div class="rgbw-label">
+          <ng-template [ngIf]="!isSwitchKnown">Unknown</ng-template>
+          <ng-template [ngIf]="isSwitchKnown && isOn">On</ng-template>
+          <ng-template [ngIf]="isSwitchKnown && !isOn">Off</ng-template>
         </div>
       </div>
     </div>
