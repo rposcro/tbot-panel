@@ -1,4 +1,24 @@
+@use "@angular/material" as mat;
+
+mat-tab-group {
+  //background: var(--mat-sys-primary-container);
+  @include mat.tabs-overrides((
+          active-label-text-color: orange,
+          active-hover-label-text-color: orange,
+          active-focus-label-text-color: orange,
+
+          active-indicator-color: orange,
+          active-hover-indicator-color: orange,
+          active-focus-indicator-color: orange,
+
+          inactive-label-text-color: #a0a0a0,
+          inactive-hover-label-text-color: white,
+  ));
+}
+
 .tab-label-title {
   font-size: 18px;
   padding-left: 5px;
 }
+
+
